@@ -16,7 +16,13 @@ defmodule SoapreactWeb.Router do
   scope "/", SoapreactWeb do
     pipe_through :browser # Use the default browser stack
 
+    # get "/users", UserController, :index
+    # get "/users/:id", UserController, :show
+
+
     get "/", PageController, :index
+    resources "/posts", PostController
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.

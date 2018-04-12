@@ -23,9 +23,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Routes from './components/Routes';
+import { BrowserRouter } from 'react-router-dom'
+  const Afpp = () => (
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
+  )
 
 
-ReactDOM.render(
-  <Routes />,
-  document.getElementById("root")
-)
+// ReactDOM.render(
+//   <Afpp />,
+//   document.getElementById("root")
+// )
