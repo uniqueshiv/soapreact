@@ -20,7 +20,7 @@ defmodule Soapreact.Mixfile do
   def application do
     [
       mod: {Soapreact.Application, []},
-      extra_applications: [:logger, :runtime_tools, :scrivener]
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :scrivener_html]
     ]
   end
 
@@ -42,7 +42,13 @@ defmodule Soapreact.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:ecto_enum, "~> 1.0"},
-      {:scrivener, "~> 2.0"}
+      #for pagination and pagination library view
+      {:scrivener_ecto, "~> 1.0"},
+      {:scrivener_html, "~> 1.7"},
+      #//for login logout session package
+      {:guardian, "~> 1.0-beta"},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 0.12"}
     ]
   end
 

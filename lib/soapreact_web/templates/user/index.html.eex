@@ -3,8 +3,11 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Email</th>
       <th>Name</th>
-      <th>Age</th>
+      <th>Phone</th>
+      <th>Password hash</th>
+      <th>Is admin</th>
 
       <th></th>
     </tr>
@@ -12,8 +15,11 @@
   <tbody>
 <%= for user <- @users do %>
     <tr>
+      <td><%= user.email %></td>
       <td><%= user.name %></td>
-      <td><%= user.age %></td>
+      <td><%= user.phone %></td>
+      <td><%= user.password_hash %></td>
+      <td><%= user.is_admin %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
@@ -24,5 +30,6 @@
 <% end %>
   </tbody>
 </table>
+<%= pagination_links @page %>
 
 <span><%= link "New User", to: user_path(@conn, :new) %></span>

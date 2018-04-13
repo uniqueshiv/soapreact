@@ -1,14 +1,14 @@
 defmodule SoapreactWeb.UserControllerTest do
   use SoapreactWeb.ConnCase
 
-  alias Soapreact.Accounts
+  alias Soapreact.Auth
 
-  @create_attrs %{age: 42, name: "some name"}
-  @update_attrs %{age: 43, name: "some updated name"}
-  @invalid_attrs %{age: nil, name: nil}
+  @create_attrs %{email: "some email", is_admin: true, name: "some name", password_hash: "some password_hash", phone: "some phone"}
+  @update_attrs %{email: "some updated email", is_admin: false, name: "some updated name", password_hash: "some updated password_hash", phone: "some updated phone"}
+  @invalid_attrs %{email: nil, is_admin: nil, name: nil, password_hash: nil, phone: nil}
 
   def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
+    {:ok, user} = Auth.create_user(@create_attrs)
     user
   end
 
@@ -60,7 +60,7 @@ defmodule SoapreactWeb.UserControllerTest do
       assert redirected_to(conn) == user_path(conn, :show, user)
 
       conn = get conn, user_path(conn, :show, user)
-      assert html_response(conn, 200) =~ "some updated name"
+      assert html_response(conn, 200) =~ "some updated email"
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do

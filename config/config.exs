@@ -22,6 +22,21 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+# for pagination html
+config :scrivener_html,
+  routes_helper: Soapreact.Router.Helpers,
+  # If you use a single view style everywhere, you can configure it here. See View Styles below for more info.
+  view_style: :bootstrap
+
+#auth gurading
+config :soapreact, Soapreact.Auth.Guardian,
+     issuer: "soapreact",
+     secret_key: "qbVEsOl3rPxUIsvTPxNn5iSMraeJEG3ybGUhIDGF+LVpUUB2vdf5onnijo/Ceap9"
+ #
+ config :soapreact, SoapreactWeb.AuthPipeline,
+     module: SoapreactWeb.Guardian,
+     error_handler: SoapreactWeb.AuthErrorHandler
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

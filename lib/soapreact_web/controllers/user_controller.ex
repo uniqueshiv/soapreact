@@ -1,53 +1,38 @@
 defmodule SoapreactWeb.UserController do
   use SoapreactWeb, :controller
 
-  alias Soapreact.Accounts
-  alias Soapreact.Accounts.User
-
+  alias Soapreact.Auth
+  alias Soapreact.Auth.User
 
   # def index(conn, _params) do
-  #   users = Accounts.list_users()
+  #   users = Auth.list_users()
   #   render(conn, "index.html", users: users)
   # end
 
   def index(conn, params) do
-    users = Accounts.list_users()
-    # users= User
-    #   |>Repo.paginate(params)
+  users =
+   Soapreact.Auth.User
+    #|> order_by(desc: :name)
+    |> Soapreact.Repo.paginate(params)
+    render(conn, "index.html", users: users, page: users)
 
-    render(conn, "index.html", users: users)
-  end
-  # def index(conn, _params) do
-  #   page =
-  #     Accounts.User
-  #     #|> where([p], p.age > 30)
-  #     |> order_by(desc: :id)
-  #     # |> preload(:friends)
-  #     |>Accounts.Repo.paginate(params)
-  #
-  #   render conn, :index,
-  #     people: page.entries,
-  #     page_number: page.page_number,
-  #     page_size: page.page_size,
-  #     total_pages: page.total_pages,
-  #     total_entries: page.total_entries
-  # end
-  # def index(conn, params) do
-  #   page=User
-  #   |> Repo.paginate(params)
-  #   render(conn, "index.html", users: page.entries, page: page)
-  #
-  # end
-
-
+  # render conn, :index,
+  #   users: page,
+  #   page: page,
+  #   people: page.entries,
+  #   page_number: page.page_number,
+  #   page_size: page.page_size,
+  #   total_pages: page.total_pages,
+  #   total_entries: page.total_entries
+end
 
   def new(conn, _params) do
-    changeset = Accounts.change_user(%User{})
+    changeset = Auth.change_user(%User{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Accounts.create_user(user_params) do
+    case Auth.create_user(user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User created successfully.")
@@ -58,20 +43,20 @@ defmodule SoapreactWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+    user = Auth.get_user!(id)
     render(conn, "show.html", user: user)
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    changeset = Accounts.change_user(user)
+    user = Auth.get_user!(id)
+    changeset = Auth.change_user(user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
+    user = Auth.get_user!(id)
 
-    case Accounts.update_user(user, user_params) do
+    case Auth.update_user(user, user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
@@ -82,8 +67,8 @@ defmodule SoapreactWeb.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    {:ok, _user} = Accounts.delete_user(user)
+    user = Auth.get_user!(id)
+    {:ok, _user} = Auth.delete_user(user)
 
     conn
     |> put_flash(:info, "User deleted successfully.")

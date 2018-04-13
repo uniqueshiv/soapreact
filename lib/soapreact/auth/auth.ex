@@ -1,13 +1,33 @@
-defmodule Soapreact.Accounts do
+defmodule Soapreact.Auth do
   @moduledoc """
-  The Accounts context.
+  The Auth context.
   """
 
   import Ecto.Query, warn: false
   alias Soapreact.Repo
 
-  alias Soapreact.Accounts.User
+  alias Soapreact.Auth.User
+  #use for check password
+  alias Comeonin.Bcrypt
 
+
+  @doc """
+    check user authenication
+  """
+ # def authenticate_user(email, password) do
+ #    query = from u in User, where: u.email == ^email
+ #    Repo.one(query)
+ #      |>check_password(password)
+ # end
+ #
+ # defp check_password(nil, _), do: {:error, "Incorrect email OR password"}
+ #
+ # defp check_password(user, plain_text_password) do
+ #     case Bcrypt.checkpw(plain_text_password, user.password_hash) do
+ #       true -> {:ok, user}
+ #       false -> {:error, "Incorrect email or password"}
+ #     end
+ # end
   @doc """
   Returns the list of users.
 
